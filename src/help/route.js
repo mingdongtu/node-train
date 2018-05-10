@@ -11,7 +11,7 @@ const tplPath = path.join(__dirname,'../template/dir.tpl')
 const source = fs.readFileSync(tplPath) ; //采用同步方法来执行 ,读取文件的全部内容
 const template = Handlebars.compile(source.toString())   
 const mime = require('./mime.js')
-const compress = require('./compress.js')
+const compress = require('./compress.js')  //引用压缩方法
 module.exports = async function(req,res,filePath){   //输出一个匿名函数
     
     try{   //尝试执行代码块
@@ -22,7 +22,7 @@ module.exports = async function(req,res,filePath){   //输出一个匿名函数
            res.setHeader('Content-Type',contentType);
            let rs = fs.createReadStream(filePath)
           
-           if(filePath.match(config.compress)){
+           if(filePath.match(config.compress)){  //文件符合条件才压缩
                rs = compress(rs,req,res)   // 对文件流进行压缩
            }
            rs.pipe(res)
