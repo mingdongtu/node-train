@@ -12,6 +12,8 @@ const source = fs.readFileSync(tplPath) ; //采用同步方法来执行 ,读取�
 const template = Handlebars.compile(source.toString())   
 const mime = require('./mime.js')
 const compress = require('./compress.js')  //引用压缩方法
+const range = require('./range.js')   //核心还是处理文件流
+
 module.exports = async function(req,res,filePath){   //输出一个匿名函数
     
     try{   //尝试执行代码块
@@ -20,8 +22,16 @@ module.exports = async function(req,res,filePath){   //输出一个匿名函数
           if(stats.isFile()){   //文件
            res.statusCode = 200;
            res.setHeader('Content-Type',contentType);
-           let rs = fs.createReadStream(filePath)
-          
+    // 处理请求范围的问题
+     let rs ;
+    const {code,start,end} = range(stats,req,res)
+     if(code === 2000){  //处理不了
+            rs = fs.createReadStream(filePath)
+     }else{ 
+            rs = fs.createReadStream(filePath,{start,end})
+     }
+        //    let rs = fs.createReadStream(filePath)
+           
            if(filePath.match(config.compress)){  //文件符合条件才压缩
                rs = compress(rs,req,res)   // 对文件流进行压缩
            }
