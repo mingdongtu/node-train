@@ -1,8 +1,11 @@
 {
-  "name": "train",
-  "version": "1.0.0",
+  "name": "node-train",
+  "version": "0.1.1",
   "description": "",
   "main": "index.js",
+  "bin":{
+     "node-train":"bin/anydoor"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,6 +21,7 @@
   "homepage": "https://github.com/mingdongtu/node-train#readme",
   "dependencies": {
     "chalk": "^2.4.0",
-    "handlebars": "^4.0.11"
+    "handlebars": "^4.0.11",
+    "yargs": "^11.0.0"
   }
 }

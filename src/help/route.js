@@ -6,7 +6,7 @@ const Handlebars = require('handlebars')
 const promisify = require('util').promisify;
 const stat = promisify(fs.stat);  //fs.stat 获取文件的状态信息
 const readdir = promisify(fs.readdir);//
-const config = require('../config/defaultConfig.js')
+// const config = require('../config/defaultConfig.js')  //这个是变的，读不到用户的自定义输入
 const tplPath = path.join(__dirname,'../template/dir.tpl')
 const source = fs.readFileSync(tplPath) ; //采用同步方法来执行 ,读取文件的全部内容
 const template = Handlebars.compile(source.toString())   
@@ -14,7 +14,7 @@ const mime = require('./mime.js')
 const compress = require('./compress.js')  //引用压缩方法
 const range = require('./range.js')   //核心还是处理文件流
 
-module.exports = async function(req,res,filePath){   //输出一个匿名函数
+module.exports = async function(req,res,filePath,config){   //输出一个匿名函数
     
     try{   //尝试执行代码块
         const stats = await stat(filePath);   //await 只能在async方法中使用 ：回调结果
