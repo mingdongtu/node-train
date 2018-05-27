@@ -2,9 +2,9 @@
   "name": "node-train",
   "version": "0.1.1",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "bin":{
-     "node-train":"bin/anydoor"
+     "node-train":"bin/node-train"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
